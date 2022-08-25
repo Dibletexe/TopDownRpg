@@ -168,7 +168,11 @@ MonoBehaviour:
   - {fileID: 950289787345209405, guid: 45b346569c4c2d849ac34321730bb1f4, type: 3}
   FoodTiles:
   - {fileID: 7147764506477081510, guid: 6d19a11c529de0e4cb6298e28a17ff88, type: 3}
-  EnemyTiles: []
+  EnemyTiles:
+  - {fileID: 1308335434077186411, guid: 1470e543c29a7954db0dc58cb70fef77, type: 3}
+  - {fileID: 5250094129821776268, guid: cbf786f5f3ff2384cab4a5ab9da36f2d, type: 3}
+  ExitTile: {fileID: 2876040172918008867, guid: 4253ff59b69d46540bfcae27161e710b,
+    type: 3}
 --- !u!114 &56425025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   YourTurn: 1
   WaitTime: 0.5
+  EnemysMoving: 0
+  LvlTxt: {fileID: 1728566865}
 --- !u!4 &56425026
 Transform:
   m_ObjectHideFlags: 0
@@ -355,6 +361,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 943210341}
+  - {fileID: 1728566864}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -387,6 +394,7 @@ MonoBehaviour:
     m_Bits: 256
   foodPerItem: 10
   foodText: {fileID: 943210342}
+  FoodLost: 5
 --- !u!1 &943210340
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,12 +499,12 @@ PrefabInstance:
     - target: {fileID: 4578482699438898105, guid: 5c03309167b87bf4993f6c1eb89d195f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.73
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4578482699438898105, guid: 5c03309167b87bf4993f6c1eb89d195f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.48
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4578482699438898105, guid: 5c03309167b87bf4993f6c1eb89d195f,
         type: 3}
@@ -540,6 +548,85 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c03309167b87bf4993f6c1eb89d195f, type: 3}
+--- !u!1 &1728566863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728566864}
+  - component: {fileID: 1728566866}
+  - component: {fileID: 1728566865}
+  m_Layer: 5
+  m_Name: LevelTxt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1728566864
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728566863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 420330947}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -391, y: 92}
+  m_SizeDelta: {x: 160, y: 106.6818}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1728566865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728566863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: b284a6525342f44599e9ce79e37c2d61, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Level - 0
+--- !u!222 &1728566866
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728566863}
+  m_CullTransparentMesh: 1
 --- !u!1 &2030997416
 GameObject:
   m_ObjectHideFlags: 0

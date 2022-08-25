@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
     public GameObject[] WallTiles;
     public GameObject[] FoodTiles;
     public GameObject[] EnemyTiles;
+    public GameObject ExitTile;
 
     private List <Vector2> gridPos = new List <Vector2>();
     private Transform boardParent;
@@ -49,11 +50,12 @@ public class BoardManager : MonoBehaviour
 
     public void SetUpScene(int CurrentLvl)
     {
-        InitilizeGridPos();
         BoardSetup();
+        InitilizeGridPos();
         PlaceRanObj(WallTiles, 4, 9);
         PlaceRanObj(FoodTiles, 1, 2);
-        PlaceRanObj(EnemyTiles, CurrentLvl, CurrentLvl + 2);
+        PlaceRanObj(EnemyTiles, CurrentLvl, CurrentLvl);
+        Instantiate(ExitTile, new Vector2(Columns - 1, Rows - 1), Quaternion.identity);
     }
 
     public Vector2 RandPos()

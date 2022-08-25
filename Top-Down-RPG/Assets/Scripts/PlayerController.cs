@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MovingController{
 
     private int food = 100;
     public int foodPerItem = 10;
     public Text foodText;
+    public int FoodLost = 5;
 
     protected override void AttemptMove<T>(int x, int y)
     {
-            food -= 5;
-            foodText.text = $"Food - {food}";
+            LoseFood(FoodLost);
             base.AttemptMove<T>(x, y);
             GameManager.instance.YourTurn = false;
     }
@@ -47,8 +48,29 @@ public class PlayerController : MovingController{
             food += foodPerItem;
             foodText.text = $"+ {foodPerItem} food gained - Food: {food}";
             Destroy(collision.gameObject);
+        }else if(collision.tag == "Exit")
+        {
+            //Make new level
+            enabled = false;
+            Invoke("NewLvl", 1f);
+
+
         }
     }
 
-    // Set YourTurn To true
+    private void NewLvl()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
+    public void LoseFood(int Amount)
+    {
+        food -= Amount;
+        foodText.text = $"-{Amount} Food - {food}";
+    }
+
+    protected override void OnCantMove<T>(T Component)
+    {
+        throw new System.NotImplementedException();
+    }
 }

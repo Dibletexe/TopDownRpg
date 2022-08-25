@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingController : MonoBehaviour{
+public abstract class MovingController : MonoBehaviour{
     
     bool isMoveing = false;
     public float MoveTime = 0.5f;
@@ -13,7 +13,7 @@ public class MovingController : MonoBehaviour{
         Collider = GetComponent<BoxCollider2D>();
     }
 
-    protected void Move(int x, int y, out RaycastHit2D hit){
+    protected bool Move(int x, int y, out RaycastHit2D hit){
         Vector2 StartPos = transform.position;
         Vector2 EndPos = StartPos + new Vector2(x, y);
         Collider.enabled = false;
@@ -24,7 +24,9 @@ public class MovingController : MonoBehaviour{
         
         if (!isMoveing && hit.transform == null){
             StartCoroutine(SmoothMove(EndPos));
+            return true;
         }
+        return false;
     }
 
     protected IEnumerator SmoothMove(Vector3 EndPos){
@@ -45,7 +47,19 @@ public class MovingController : MonoBehaviour{
     protected virtual void AttemptMove<T>(int x, int y)
     {
         RaycastHit2D hit;
-        Move(x, y, out hit);   
+        var CanMove = Move(x, y, out hit);
+
+        if (hit.transform != null)
+        {
+            var HitObject = hit.transform.GetComponent<T>();
+
+            if (!CanMove && HitObject != null)
+            {
+                OnCantMove(HitObject);
+            }
+        }
     }
+
+    protected abstract void OnCantMove<T>(T Component);
 
 }
